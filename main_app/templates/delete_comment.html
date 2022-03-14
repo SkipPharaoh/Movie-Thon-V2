@@ -1,0 +1,37 @@
+{% extends 'base.html' %} 
+{% block title%} {{ comment.user}} - Delete Comment {% endblock %}
+{% block content %}
+
+{% if user.id == comment.user.id %}
+<h1 class="title">Delete Comment</h1>
+
+<h3>{{comment.body}} </h3>
+<div class="form-group">
+    <form action="" method="post">
+        {% csrf_token %}
+
+        <strong>Are You Sure??</strong>
+        <div class="d-flex">
+            <a href="{% url 'social_detail' comment.pk %} " type='button' class="btn btn-info">Back</a>
+            <button class="btn btn-danger">Delete</button>
+        </div>
+    </form>
+</div>
+
+<!-- If The Incorrect User Lands On This Page -->
+{% else %}
+<div class="Container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10 col-cm-12 text-center">
+            <h1 class="display-2">You're not the correct user for this page!</h1>
+            <div class="d-flex justify-content-center mt-5">
+                <a href="{% url 'social_detail' comment.pk %}" class="btn btn-primary"> Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,9 @@
+Turn this into a Full-Stack Django app.
+
+Use the https://developers.themoviedb.org/3/getting-started/introduction API ! 
+
+The Api Key is in your email
+
+Use TailwindCSS for styling!
+
+Portfolio Project

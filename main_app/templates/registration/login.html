@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+{% block title%} Login {% endblock %}
+{% block content %}
+
+
+<div class="Container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10 col-cm-12 text-center">
+            <form action="{% url 'login' %}" method="post" class="form-control">
+                <h1 class="display-2">Login To Your Account</h1>
+                {% csrf_token %}
+
+                {{ form.as_p }}
+                
+                <button class="btn btn-dark">Login</button>
+                
+                <small class="form-text text-muted" >No account? Signup 
+                    <a href="{% url 'signup' %}">Here</a> 
+                </small>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    const form = document.getElementsByTagName('input')
+
+    for (let field in form){
+            form[field].className += 'form-control'
+    }
+</script>
+
+{% endblock %}
+

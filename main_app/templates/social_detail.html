@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title%} {{comment.user}} - {{comment.body}} {% endblock %}
+{% block content %}
+
+{% if comment.user.profile.image %}
+<a href="{% url 'user-profile' comment.user.profile.id %}">
+    <img src="{{ comment.user.profile.image.url }}" alt="" width=48 height=48 class="rounded-circle"/>
+</a>
+
+{% else %}
+<a href="{% url 'user-profile' comment.user.profile.id %}">
+    <img src="https://img.icons8.com/nolan/48/test-account.png"/>
+</a>
+
+{%endif%}
+<strong> {{ comment.user }} - {{comment.timestamp}}</strong>
+<hr>
+<p> {{comment.body}} </p> 
+{% if comment.image %}
+    <img src="{{comment.image.url}}" alt="">
+{% endif %}
+
+<form action="{% url 'like_comment' comment.pk %}" method="post">
+    {% csrf_token %}
+    {% if liked %}
+        <button type="submit" name="comment_id" value="{{ comment.id }}" class="btn btn-light btn-sm">
+            <img src="https://img.icons8.com/external-sbts2018-solid-sbts2018/20/000000/external-dislike-social-media-sbts2018-solid-sbts2018.png"/>
+        </button>
+    {% else %}
+        <button type="submit" name="comment_id" value="{{ comment.id }}" class="btn btn-light btn-sm">
+            <img src="https://img.icons8.com/external-icongeek26-glyph-icongeek26/20/000000/external-like-donation-and-charity-icongeek26-glyph-icongeek26.png"/>
+        </button> 
+    {% endif %}
+        {{total_likes}}
+</form>
+
+<hr>
+
+<h2>Comments...</h2>
+{% if not comment.comments.all %}
+    No Comments Yet... 
+    <a href="{% url 'comment-on-post' comment.pk%}" type='button' class="btn btn-primary">Comment</a>
+{% else %}
+
+
+    {% for comment in comment.comments.all%}
+
+
+        <strong>
+            {{comment.name }} - {{comment.date_added}} said:
+        </strong> 
+        <br>
+        {% if comment.image %}
+            <img src="{{ comment.image.url }}" alt=""/> 
+        {%endif%}
+        <br>
+        {{comment.body}}
+        <br>
+        
+        <br>
+    {% endfor %}
+
+    <a href="{% url 'comment-on-post' comment.pk%}" type='button' class="btn btn-primary">Comment</a>
+{% endif %}
+
+<hr>
+
+<a href="{% url 'social' %}" class="btn btn-primary">Back</a>
+
+{% if user.id == comment.user.id %}
+<a href="{% url 'update-comment' comment.pk %} " type='button' class="btn btn-primary">Edit</a>
+<a href="{% url 'delete-comment' comment.pk %} " type='button' class="btn"><img src="https://img.icons8.com/ios-filled/20/000000/full-trash--v2.png"/></a>
+{% endif %}
+
+{% endblock %}
+
+
+
+

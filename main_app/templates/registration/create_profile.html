@@ -1,0 +1,16 @@
+{% extends 'base.html' %} 
+{% block title%} {{ comment.user}} - Create A New Profile Page {% endblock %}
+{% block content %}
+
+
+
+<h1 class="title">Create Your MovieThon Profile</h1>
+<div class="form-group">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <input type="submit" class="btn btn-info" value="Create Profile"/>
+    </form>
+</div>
+
+{% endblock %}

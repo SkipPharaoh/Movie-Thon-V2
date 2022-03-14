@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+{% block title%} {{ comment.user}} - Edit MovieThon Profile {% endblock %}
+{% block content %}
+
+
+{% if user.id == userprofile.user.id %}
+
+    <h1 class="title">Edit MovieThon Profile</h1>
+    <div class="form-group">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <input type="submit" class="btn btn-info" value="Update Profile"/>
+        </form>
+    </div>
+
+{% else %}
+    <div class="Container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-10 col-cm-12 text-center">
+                <h1 class="display-2">You're not the correct user for this page!</h1>
+                <div class="d-flex justify-content-center mt-5">
+                    <a href="{% url 'user-profile' user.id %}" class="btn btn-primary"> Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+{% endblock %}

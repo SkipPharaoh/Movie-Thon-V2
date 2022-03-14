@@ -1,0 +1,16 @@
+{% extends 'base.html' %} 
+{% block title%} {{ comment.user}} - Add Post {% endblock %}
+{% block content %}
+
+
+
+<h1 class="title">Add Post</h1>
+<div class="form-group">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <input type="submit" class="btn btn-info" value="Post"/>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html'%}
+{% block title%} Signup {% endblock %}
+{% block content %}
+
+
+<div class="Container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10 col-cm-12 text-center">
+            <form action="{% url 'signup' %}" method="post" class="form-control">
+                <h1 class="display-2">Sign Up For MovieThon!</h1>
+                {% csrf_token %}
+            
+                {{ form.as_p }}
+                <button class="btn btn-dark">Signup</button>
+                <small class="form-text text-muted" >Have an account? Login 
+                    <a href="{% url 'login' %}">Here</a> 
+                </small>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

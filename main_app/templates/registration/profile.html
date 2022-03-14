@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+{% block title%} Profile Page {% endblock %}
+{% block content %}
+
+
+<div class="Container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10 col-cm-12 text-center">
+            <h1 class="display-2">User Profile</h1>
+            
+            {% if user_page.image %}
+            <img src="{{ user_page.image.url }}" alt="" width=200 height=200 class="rounded-circle"/>
+            {% else %}
+            <img src="https://img.icons8.com/nolan/48/test-account.png"/>
+            {%endif%}
+            {{ user_page }}
+            
+        </div>
+    </div>
+    <a class="btn btn-dark" href="{% url 'edit-profile-page' user.profile.id %}">Edit Profile</a>
+    <a class="btn btn-dark" href="{% url 'edit-settings' %}">Edit Settings</a>
+</div>
+
+{% endblock %}

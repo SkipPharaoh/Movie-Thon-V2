@@ -1,0 +1,42 @@
+{% extends 'base.html' %} 
+{% block title%} {{ comment.user}} - Edit Comment {% endblock %}
+{% block content %}
+
+
+<!-- LOGIN/LOGOUT BUTTON -->
+{% if user.is_authenticated %}
+    {% if user.id == comment.user.id %}
+
+<h1 class="title">Edit Comment</h1>
+<div class="form-group">
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <input type="submit" class="btn btn-info" value="Update"/>
+        <a href="{% url 'social_detail' comment.pk %}" class="btn btn-warning"> Back</a>
+    </form>
+</div>
+
+<!-- If The Incorrect User Lands On This Page -->
+    {% else %}
+        <div class="Container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-10 col-cm-12 text-center">
+                    <h1 class="display-2">You're not the correct user for this page!</h1>
+                    <div class="d-flex justify-content-center mt-5">
+                        <a href="{% url 'social_detail' comment.pk %}" class="btn btn-primary"> Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+<!-- Non Account Holder See Login/Signup Info Below -->
+{% else %}
+    <div class="Signup">
+        <a class="options" href="{% url 'login' %}">Log In</a>
+        <a class="options" href="{% url 'signup' %}">Sign up</a>
+    </div>
+{% endif %}
+
+{% endblock %}
