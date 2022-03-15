@@ -1,1 +1,1 @@
-web: gunicorn MovieThon.wsgi 
+web: gunicorn moviethon.wsgi 

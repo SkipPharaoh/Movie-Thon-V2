@@ -166,26 +166,43 @@ class WatchlistView(TemplateView):
         context["user_page"] = user_page
         return context
     
-    # def form_valid(self, form, *args, **kwargs):
-    #     id = kwargs.get('movie_id')
-    #     print(id)
-    #     form.instance.user = self.request.user
-    #     form.instance.movie_id = id
-    #     return super().form_valid(form)
-    
-    # def get_success_url(self):
-    #     return HttpResponseRedirect(reverse('movie_detail', args=[str(pk)]))
 
-def AddWatchlistView(request, pk):
-    movie = get_object_or_404(Watchlist, id=request.POST.get('movie_id'))
-    # added = False
-    # if movie.likes.filter(id=request.user.id).exists():
-    #     comment.likes.remove(request.user)
-    #     added = False
-    # else:
-    #     comment.likes.add(request.user)
-    #     added = True
-    return HttpResponseRedirect(reverse('movie_detail', args=[str(pk)]))
+class AddWatch(CreateView):
+    model = Watchlist
+    form_class = AddWatchlist
+    # def AddWatchlistView(request, pk):
+    #     movie = get_object_or_404(Watchlist, id=request.POST.get('movie_id'))
+    #     movie = Watchlist.objects.get(id=pk)
+
+    def form_valid(self, request, form, *args, **kwargs):
+        form.instance.user = self.request.user
+        id = kwargs.get('movie_id')
+        form.instance.movie_id = id
+        return super().form_valid(form)
+    #     print(id)
+    
+    def get_success_url(self):
+        return HttpResponseRedirect(reverse('movie_detail', args=[str(pk)]))
+
+        # def get(self, request):
+        #     form = AddWatchlist() # comes from the auth.forms library - create a new form;
+
+        #     context = {'form': form}
+        #     return render(request, "registration/signup.html", context)
+
+
+        # # post request
+        # def post(self, request):
+
+        #     if form.is_valid():
+        #         user = form.save() # save the user in the users table
+        #         # login functionality
+        #         login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+        #         return redirect('social')
+        #     else:
+
+        #         context = {'form': form}
+        #         return render(request, "registration/signup.html", context)
 
 
 
@@ -218,12 +235,14 @@ class CreateProfile(CreateView):
     template_name = 'registration/create_profile.html'
     # fields = '__all__'
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     form.instance.user = self.request.user
+    #     return super().form_valid(form)
 
-    def get_success_url(self):
-        return reverse('user-profile', kwargs={'pk': self.object.pk})
+    # def get_success_url(self):
+    #     return reverse('user-profile', kwargs={'pk': self.object.pk})
+
+
 
 
 @method_decorator(login_required, name="dispatch")

@@ -14,7 +14,7 @@ urlpatterns = [
     path('social/<int:pk>/comment/', views.CommentOnPost.as_view(), name='comment-on-post'),
     path('like/<int:pk>', views.LikeView, name='like_comment'),
 
-    path('watchlist/<int:pk>', views.AddWatchlistView, name='add_movie'),
+    path('watchlist/<int:pk>', views.AddWatch.as_view(), name='add_movie'),
     path('profile/<int:pk>/watchlist', views.WatchlistView.as_view(), name='watchlist'),
 
     path('profile/<int:pk>/', views.ProfilePage.as_view(), name='user-profile'),
