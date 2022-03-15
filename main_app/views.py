@@ -134,8 +134,6 @@ def CommentLikeView(request, pk):
         like = True
     return HttpResponseRedirect(reverse('social_detail', args=[str(pk)]))
 
-
-
 @method_decorator(login_required, name="dispatch")
 class MovieDetail(TemplateView):
     def get(self, request, *args, **kwargs):
