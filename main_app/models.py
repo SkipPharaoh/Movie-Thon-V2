@@ -32,6 +32,9 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return str(self.user)
+    
+    # def get_absolute_url(self):
+    #     return reverse('social', kwargs={'pk' : self.pk})
 
 
 class Comment(models.Model):

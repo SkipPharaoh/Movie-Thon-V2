@@ -235,12 +235,12 @@ class CreateProfile(CreateView):
     template_name = 'registration/create_profile.html'
     # fields = '__all__'
 
-    # def form_valid(self, form):
-    #     form.instance.user = self.request.user
-    #     return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
-    # def get_success_url(self):
-    #     return reverse('user-profile', kwargs={'pk': self.object.pk})
+    def get_success_url(self):
+        return reverse('user-profile', kwargs={'pk': self.object.pk})
 
 
 
