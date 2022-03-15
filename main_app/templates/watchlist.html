@@ -2,9 +2,21 @@
 {% block title%} Watchlist {% endblock %}
 {% block content %}
 
-<h1 class="title"> Your MovieThon Watchlist </h1>
-<p>Add movies to your watchlist</p>
-<h1>{{}}</h1>
+
+
+<strong>Your MovieThon Watchlist</strong>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for movie in watchlist %}
+    <div class="col">
+        <div class="card text-white bg-dark">
+            <div class="card-header text-center">{{movie.movie_id}}</div>
+            <a href="">
+                <img src="" class="card-img-top" alt="...">
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
 
 {% endblock %}

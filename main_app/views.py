@@ -14,6 +14,7 @@ from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 
+
 # Authorization decorators:
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -32,7 +33,7 @@ page = 1
                         # Movies #
 # Home
     # FETCH REQUEST #
-def home(request):
+def movie(request):
     playing = requests.get(f"https://api.themoviedb.org/3/movie/now_playing?api_key={TMDB_API_KEY}&language=en-US&page={page}").json()
 
     coming = requests.get(f"https://api.themoviedb.org/3/movie/upcoming?api_key={TMDB_API_KEY}&language=en-US&page={page}").json()
@@ -67,7 +68,6 @@ class SocialView(DetailView):
 class AddComment(CreateView):
     model = Comment
     form_class = CommentForm
-    # fields = ['body']
     template_name = 'add_comment.html'
     success_url = '/social/'
 
@@ -93,14 +93,13 @@ class CommentOnPost(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('social_detail', kwargs={'pk': self.object.pk})  
+        return reverse('social_detail', kwargs={'pk': self.kwargs['pk']})  
 
 
 @method_decorator(login_required, name="dispatch")
 class UpdateComment(UpdateView):
     model = Comment
     template_name = 'update_comment.html'
-    # fields = ['body']
     form_class = CommentForm
     success_url = '/'
 
@@ -145,65 +144,44 @@ class SearchResult(TemplateView):
 
 
 
-
-
-
-
-
-
                         # USER MODEL #
 # Watchlist
 
 @method_decorator(login_required, name="dispatch")
 class WatchlistView(TemplateView):
     model = Watchlist
-    form_class = AddWatchlist
+    # form_class = AddWatchlist
     template_name = 'watchlist.html'
 
     def get_context_data(self, *args, **kwargs):
-        context = super(WatchlistView, self).get_context_data(*args, **kwargs)
+        context = super().get_context_data(*args, **kwargs)
         user_page = get_object_or_404(UserProfile, id=self.kwargs['pk'])
-        context["user_page"] = user_page
+        context["watchlist"] = Watchlist.objects.filter(user=self.request.user)
         return context
     
-
-class AddWatch(CreateView):
+class AddWatch(View):
     model = Watchlist
     form_class = AddWatchlist
-    # def AddWatchlistView(request, pk):
-    #     movie = get_object_or_404(Watchlist, id=request.POST.get('movie_id'))
-    #     movie = Watchlist.objects.get(id=pk)
 
     def form_valid(self, request, form, *args, **kwargs):
         form.instance.user = self.request.user
-        id = kwargs.get('movie_id')
-        form.instance.movie_id = id
+        form.instance.movie_id = kwargs.get('movie_id')
         return super().form_valid(form)
-    #     print(id)
-    
+
     def get_success_url(self):
-        return HttpResponseRedirect(reverse('movie_detail', args=[str(pk)]))
+        return reverse('movies', kwargs={'pk': self.object.pk})
+    # def get(self, request, *args, **kwargs):
+    #     form.instance.user = self.request.user
+    #     form.instance.movie_id = kwargs.get('movie_id')
+    #     watchlist = Watchlist.objects.create(user=self.request.user, movie_id=kwargs.get('movie_id'))
+    #     return redirect('watchlist')
 
-        # def get(self, request):
-        #     form = AddWatchlist() # comes from the auth.forms library - create a new form;
-
-        #     context = {'form': form}
-        #     return render(request, "registration/signup.html", context)
-
-
-        # # post request
-        # def post(self, request):
-
-        #     if form.is_valid():
-        #         user = form.save() # save the user in the users table
-        #         # login functionality
-        #         login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-        #         return redirect('social')
-        #     else:
-
-        #         context = {'form': form}
-        #         return render(request, "registration/signup.html", context)
-
+class RemoveWatch(View):
+    model = Watchlist
+    def get(self, request, *args, **kwargs):
+        watchlist = Watchlist.objects.get(pk=watchlist_pk)
+        watchlist.delete()
+        return redirect('watchlist')
 
 
 
@@ -233,7 +211,6 @@ class CreateProfile(CreateView):
     model = UserProfile
     form_class = ProfilePageForm
     template_name = 'registration/create_profile.html'
-    # fields = '__all__'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -249,7 +226,6 @@ class CreateProfile(CreateView):
 class EditProfilePage(UpdateView):
     model = UserProfile
     template_name = 'registration/profile_edit_page.html'
-    # fields = '__all__'
     fields = [ 'about', 'image', 'city', 'website', 'linkedin', 'twitter', 'tiktok', 'github', 'discord']
     success_url = '/'
 
@@ -280,8 +256,7 @@ class Signup(View):
         form = SignUpForm(request.POST)
 
         if form.is_valid():
-            user = form.save() # save the user in the users table
-            # login functionality
+            user = form.save()
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('social')
         else:

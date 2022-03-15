@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.HomeView.as_view(), name='social'),
-    path('movies/', views.home, name="home"),
+    path('movies/', views.movie, name="home"),
     path('social/<int:pk>', views.SocialView.as_view(), name='social_detail'),
     path('add-comment/', views.AddComment.as_view(), name='add-comment'),
     path('social/<int:pk>/edit', views.UpdateComment.as_view(), name='update-comment'),
@@ -14,7 +14,8 @@ urlpatterns = [
     path('social/<int:pk>/comment/', views.CommentOnPost.as_view(), name='comment-on-post'),
     path('like/<int:pk>', views.LikeView, name='like_comment'),
 
-    path('watchlist/<int:pk>', views.AddWatch.as_view(), name='add_movie'),
+    path('watchlist/<int:pk>/add', views.AddWatch.as_view(), name='add_movie'),
+    path('watchlist/<int:pk>/remove', views.RemoveWatch.as_view(), name='remove_movie'),
     path('profile/<int:pk>/watchlist', views.WatchlistView.as_view(), name='watchlist'),
 
     path('profile/<int:pk>/', views.ProfilePage.as_view(), name='user-profile'),
