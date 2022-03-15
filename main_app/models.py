@@ -71,7 +71,7 @@ class CommentSection(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, blank=True, related_name='comment_likes')
 
-    def total_likes(self):
+    def all_likes(self):
         return self.likes.count()
     
     def __str__(self):

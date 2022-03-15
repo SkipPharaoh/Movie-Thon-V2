@@ -57,6 +57,21 @@
         {{comment.body}}
         <br>
         
+
+        <!-- <form action="{% url 'commentlike_comment' comment.pk %}" method="post">
+            {% csrf_token %}
+            {% if like %}
+                <button type="submit" name="comment_id" value="{{ comment.id }}" class="btn btn-light btn-sm">
+                    <img src="https://img.icons8.com/external-sbts2018-solid-sbts2018/20/000000/external-dislike-social-media-sbts2018-solid-sbts2018.png"/>
+                </button>
+            {% else %}
+                <button type="submit" name="comment_id" value="{{ comment.id }}" class="btn btn-light btn-sm">
+                    <img src="https://img.icons8.com/external-icongeek26-glyph-icongeek26/20/000000/external-like-donation-and-charity-icongeek26-glyph-icongeek26.png"/>
+                </button> 
+            {% endif %}
+                {{all_likes}}
+        </form> -->
+
         <br>
     {% endfor %}
 

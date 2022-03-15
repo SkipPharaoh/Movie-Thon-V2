@@ -13,6 +13,7 @@ urlpatterns = [
     path('search/', views.SearchResult.as_view(), name="search"),
     path('social/<int:pk>/comment/', views.CommentOnPost.as_view(), name='comment-on-post'),
     path('like/<int:pk>', views.LikeView, name='like_comment'),
+    path('like/comment/<int:pk>', views.CommentLikeView, name='commentlike_comment'),
 
     path('watchlist/<int:pk>/add', views.AddWatch.as_view(), name='add_movie'),
     path('watchlist/<int:pk>/remove', views.RemoveWatch.as_view(), name='remove_movie'),

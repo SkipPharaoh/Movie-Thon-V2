@@ -17,8 +17,10 @@
             
         </div>
     </div>
+    {% if user_page.id == user.id %}
     <a class="btn btn-dark" href="{% url 'edit-profile-page' user.profile.id %}">Edit Profile</a>
     <a class="btn btn-dark" href="{% url 'edit-settings' %}">Edit Settings</a>
+    {% endif %}
 </div>
 
 {% endblock %}

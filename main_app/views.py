@@ -54,11 +54,18 @@ class SocialView(DetailView):
     def get_context_data(self, *arg, **kwargs):
         context = super(SocialView, self).get_context_data(**kwargs)
         info = get_object_or_404(Comment, id=self.kwargs['pk'])
+        like = get_object_or_404(CommentSection, id=self.kwargs['pk'])
         total_likes = info.total_likes()
+        all_likes = like.all_likes()
         liked = False
+        like = False
         if info.likes.filter(id=self.request.user.id).exists():
             liked = True
+            like = True
+        # if like.likes.filter(id=self.request.user.id).exists():
+        #     liked = True
         context["total_likes"] = total_likes
+        context["all_likes"] = all_likes
         context['liked'] = liked
         return context
 
@@ -121,6 +128,17 @@ def LikeView(request, pk):
     else:
         comment.likes.add(request.user)
         liked = True
+    return HttpResponseRedirect(reverse('social_detail', args=[str(pk)]))
+    
+def CommentLikeView(request, pk):
+    commentSec = get_object_or_404(CommentSection, id=request.POST.get('comment_id'))
+    like = False
+    if commentSec.likes.filter(id=request.user.id).exists():
+        commentSec.likes.remove(request.user)
+        like = False
+    else:
+        commentSec.likes.add(request.user)
+        like = True
     return HttpResponseRedirect(reverse('social_detail', args=[str(pk)]))
 
 
