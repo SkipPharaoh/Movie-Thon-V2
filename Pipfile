@@ -11,6 +11,7 @@ whitenoise = "*"
 python-dotenv = "*"
 django-heroku = "*"
 django-allauth = "*"
+pillow = "*"
 
 [dev-packages]
 
