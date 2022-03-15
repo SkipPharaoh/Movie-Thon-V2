@@ -54,18 +54,11 @@ class SocialView(DetailView):
     def get_context_data(self, *arg, **kwargs):
         context = super(SocialView, self).get_context_data(**kwargs)
         info = get_object_or_404(Comment, id=self.kwargs['pk'])
-        like = get_object_or_404(CommentSection, id=self.kwargs['pk'])
         total_likes = info.total_likes()
-        all_likes = like.all_likes()
         liked = False
-        like = False
         if info.likes.filter(id=self.request.user.id).exists():
             liked = True
-            like = True
-        # if like.likes.filter(id=self.request.user.id).exists():
-        #     liked = True
         context["total_likes"] = total_likes
-        context["all_likes"] = all_likes
         context['liked'] = liked
         return context
 
