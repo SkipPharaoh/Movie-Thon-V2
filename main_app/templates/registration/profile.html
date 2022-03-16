@@ -3,24 +3,68 @@
 {% block content %}
 
 
-<div class="Container">
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-10 col-cm-12 text-center">
-            <h1 class="display-2">User Profile</h1>
-            
-            {% if user_page.image %}
-            <img src="{{ user_page.image.url }}" alt="" width=200 height=200 class="rounded-circle"/>
-            {% else %}
-            <img src="https://img.icons8.com/nolan/48/test-account.png"/>
-            {%endif%}
-            {{ user_page }}
-            
+
+
+<div class="container mt-3">
+    <div class="row d-flex justify-content-center">
+        <h1 class="display-5 text-center">User Profile</h1>
+        <div class="col-md-7 mt-3">
+            <div class="card p-3 py-4 bg-light text-black  border-info">
+                <div class="text-center"> 
+                    {% if user_page.image %}
+                        <img src="{{ user_page.image.url }}" width="100" class="rounded-circle"> 
+                    {% else %}
+                        <img src="https://img.icons8.com/nolan/100/test-account.png"/>
+                    {% endif %}
+                </div>
+                <div class="text-center mt-3"> <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>
+                    <h5 class="mt-2 mb-0">{{user_page.user}}</h5> <span>{{user_page.city}}</span>
+                    <div class="px-4 mt-1">
+                        <p class="fonts">{{user_page.about}} </p>
+                    </div>
+                    <div class="social-list">
+                        {% if user_page.website %}
+                            <a href="{{user_page.website}}" target="_blank" class="fa fa-facebook">
+                                <img src="https://img.icons8.com/fluency/30/000000/domain.png"/>
+                            </a>
+                        {% endif %}
+                        {% if user_page.github %}
+                            <a href="{{user_page.github}}" target="_blank" class="fa fa-google">
+                                <img src="https://img.icons8.com/color/30/000000/github--v1.png"/>
+                            </a>
+                        {% endif %}
+                        {% if user_page.linkedin %}
+                            <a href="{{user_page.linkedin}}" target="_blank" class="fa fa-dribbble">
+                                <img src="https://img.icons8.com/color/30/000000/linkedin.png"/>
+                            </a>
+                        {% endif %}
+                        {% if user_page.twitter %}
+                            <a href="{{user_page.twitter}}" target="_blank" class="fa fa-instagram">
+                                <img src="https://img.icons8.com/cute-clipart/30/000000/twitter.png"/>
+                            </a>
+                        {% endif %}
+                        {% if user_page.discord%}
+                            <a href="{{user_page.discord}}" target="_blank" class="fa fa-google">
+                                <img src="https://img.icons8.com/color/30/000000/discord-logo.png"/>
+                            </a>
+                        {% endif %}
+                        {% if user_page.tiktok %}
+                            <a href="{{user_page.tiktok}}" target="_blank" class="fa fa-linkedin">
+                                <img src="https://img.icons8.com/ultraviolet/30/000000/tiktok--v1.png"/>
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="buttons mt-4">
+                        {% if user_page.id == user.id %}
+                        <a class="btn btn-primary px-4" href="{% url 'edit-profile-page' user.profile.id %}">Edit Profile</a>
+                        <a class="btn btn-primary px-4 ms-3" href="{% url 'edit-settings' %}">Edit Settings</a>
+                        {% endif %}
+                    
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    {% if user_page.id == user.id %}
-    <a class="btn btn-dark" href="{% url 'edit-profile-page' user.profile.id %}">Edit Profile</a>
-    <a class="btn btn-dark" href="{% url 'edit-settings' %}">Edit Settings</a>
-    {% endif %}
 </div>
 
 {% endblock %}

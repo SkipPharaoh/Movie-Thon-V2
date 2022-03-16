@@ -179,11 +179,6 @@ class AddWatch(View):
 
     def get_success_url(self):
         return reverse('movies', kwargs={'pk': self.object.pk})
-    # def get(self, request, *args, **kwargs):
-    #     form.instance.user = self.request.user
-    #     form.instance.movie_id = kwargs.get('movie_id')
-    #     watchlist = Watchlist.objects.create(user=self.request.user, movie_id=kwargs.get('movie_id'))
-    #     return redirect('watchlist')
 
 class RemoveWatch(View):
     model = Watchlist

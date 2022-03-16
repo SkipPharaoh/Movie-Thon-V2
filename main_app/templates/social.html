@@ -6,7 +6,8 @@
 <!-- LOGIN/LOGOUT BUTTON -->
 {% if user.is_authenticated %}
 
-<div class="text-center">
+
+<div class="text-center display-5 mt-2">
     <h1 class="title">Activity Feed</h1>
 </div>
 
@@ -16,8 +17,9 @@
 
 <hr>
 
-<ul>
-    {% for comment in object_list %}
+<div class="container d-flex justify-content-center">
+    <ul>
+        {% for comment in object_list %}
         <li class="d-flex flex-column">
             <div>
                 {% if comment.user.profile.image %}
@@ -30,21 +32,22 @@
                     <img src="https://img.icons8.com/external-filled-outline-berkahicon/48/000000/external-account-email-marketing-filled-outline-berkahicon.png"/>
                 </a>
                 {% endif %}
-                {{ comment.user }}
+                {{ comment.user }} - said:
             </div>
             <p>{{ comment.body|slice:":200" }}</p>
             <small>
-                <a href="{% url 'social_detail' comment.pk %}">View Post</a>
+                <a class="badge" href="{% url 'social_detail' comment.pk %}">View Post</a>
                 {% if user.id == comment.user.id %}
-                <a href="{% url 'update-comment' comment.pk %} " type='button'>Edit</a>
+                <a class="badge" href="{% url 'update-comment' comment.pk %} " type='button'>Edit</a>
                 {% endif %}
             </small> 
         </li>
         <hr>
+        
+        {% endfor %}
+    </ul>
     
-    {% endfor %}
-</ul>
-
+</div>
 <!-- Non Account Holder See Login/Signup Info Below -->
 {% else %}
     <div class="Container">

@@ -2,11 +2,15 @@
 {% block title%} Signup {% endblock %}
 {% block content %}
 
-<strong>Search Results Page</strong>
-<div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="text-center display-5 mt-2">
+    <strong>Search Results Page</strong>
+
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
     {% for info in result.results %}
     <div class="col">
-        <div class="card text-white bg-dark">
+        <div class="card text-white bg-dark border-light">
             <div class="card-header text-center">{{info.title}}</div>
             <a href="{% url 'movie_detail' info.id %}">
                 <img src="https://image.tmdb.org/t/p/w500{{info.poster_path}}" class="card-img-top" alt="...">
